@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Box Selector</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 760px; margin: 2rem auto; padding: 0 1rem; color: #222; }
+    h1 { margin-bottom: 0; }
+    section { margin-top: 2rem; }
+    table { border-collapse: collapse; width: 100%; }
+    th, td { text-align: left; padding: 6px 8px; border-bottom: 1px solid #ddd; }
+    input[type="number"] { width: 5rem; }
+    button { padding: 6px 12px; cursor: pointer; }
+    #message { min-height: 1.5em; margin-top: 0.75rem; }
+    .error { color: #b00020; }
+    .ok { color: #1b7f3b; }
+    #result { margin-top: 1rem; padding: 0.75rem 1rem; background: #f3f6fa; border-radius: 6px; display: none; }
+    ul { padding-left: 1.2rem; }
+    li { margin-bottom: 6px; }
+  </style>
+</head>
+<body>
+  <h1>Box Selector</h1>
+  <p>Pick products and quantities, create an order, and see the cheapest box that fits.</p>
+
+  <section>
+    <h2>1. Build an order</h2>
+    <table>
+      <thead>
+        <tr><th>Product</th><th>Size (mm)</th><th>Weight (g)</th><th>Quantity</th></tr>
+      </thead>
+      <tbody id="products-body"></tbody>
+    </table>
+    <p><button id="create-btn">Create order and recommend a box</button></p>
+    <div id="message"></div>
+  </section>
+
+  <section>
+    <h2>2. Recommendation</h2>
+    <div id="result"></div>
+  </section>
+
+  <section>
+    <h2>3. Existing orders</h2>
+    <ul id="orders-list"></ul>
+  </section>
+
+  <script>
+    // Small helper: build an element with text. textContent (not innerHTML)
+    // means data from the server can never be interpreted as HTML.
+    function el(tag, text) {
+      const node = document.createElement(tag);
+      if (text !== undefined) node.textContent = text;
+      return node;
+    }
+
+    // Calls the API and turns error responses into thrown Errors.
+    async function api(url, options) {
+      const response = await fetch(url, options);
+      const data = await response.json();
+      if (!response.ok) {
+        // our API returns {"error": "..."} or {"error": {field: [...]}}
+        const message = typeof data.error === "string" ? data.error : JSON.stringify(data.error);
+        throw new Error(message);
+      }
+      return data;
+    }
+
+    function showMessage(text, isError) {
+      const box = document.getElementById("message");
+      box.textContent = text;
+      box.className = isError ? "error" : "ok";
+    }
+
+    async function loadProducts() {
+      const body = document.getElementById("products-body");
+      body.replaceChildren();
+      const data = await api("/api/products/");
+      if (data.products.length === 0) {
+        const row = el("tr");
+        const cell = el("td", "No products yet. Add some in the admin first.");
+        cell.colSpan = 4;
+        row.appendChild(cell);
+        body.appendChild(row);
+        return;
+      }
+      for (const p of data.products) {
+        const row = el("tr");
+        row.appendChild(el("td", p.name));
+        row.appendChild(el("td", p.dimensions_mm.join(" x ")));
+        row.appendChild(el("td", String(p.weight_g)));
+
+        const qty = el("input");
+        qty.type = "number";
+        qty.min = "0";
+        qty.max = "1000";
+        qty.value = "0";
+        qty.dataset.productId = p.id;
+        qty.className = "qty";
+        const cell = el("td");
+        cell.appendChild(qty);
+        row.appendChild(cell);
+
+        body.appendChild(row);
+      }
+    }
+
+    async function showRecommendation(orderId) {
+      const result = document.getElementById("result");
+      result.replaceChildren();
+      result.style.display = "block";
+      try {
+        const data = await api("/api/orders/" + orderId + "/recommendation/");
+        result.appendChild(el("strong", "Order #" + orderId + ": "));
+        if (data.box === null) {
+          result.appendChild(el("span", "no box fits this order."));
+        } else {
+          const b = data.box;
+          result.appendChild(el("span",
+            b.name + " (" + b.inner_dimensions_mm.join(" x ") + " mm inside, max " +
+            b.max_weight_g + " g), cost " + b.cost));
+        }
+      } catch (err) {
+        result.appendChild(el("span", "Error: " + err.message));
+      }
+    }
+
+    async function loadOrders() {
+      const list = document.getElementById("orders-list");
+      list.replaceChildren();
+      const data = await api("/api/orders/");
+      if (data.orders.length === 0) {
+        list.appendChild(el("li", "No orders yet."));
+        return;
+      }
+      for (const order of data.orders) {
+        const summary = order.items.map(i => i.quantity + " x " + i.product_name).join(", ");
+        const li = el("li", "Order #" + order.id + ": " + (summary || "(empty)") + " ");
+        const button = el("button", "Recommend");
+        button.addEventListener("click", () => showRecommendation(order.id));
+        li.appendChild(button);
+        list.appendChild(li);
+      }
+    }
+
+    async function createOrder() {
+      const items = [];
+      for (const input of document.querySelectorAll("input.qty")) {
+        const quantity = parseInt(input.value, 10);
+        if (quantity > 0) {
+          items.push({ product_id: parseInt(input.dataset.productId, 10), quantity: quantity });
+        }
+      }
+      if (items.length === 0) {
+        showMessage("Choose a quantity above 0 for at least one product.", true);
+        return;
+      }
+      try {
+        const order = await api("/api/orders/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ items: items }),
+        });
+        showMessage("Created order #" + order.id + ".", false);
+        await showRecommendation(order.id);
+        await loadOrders();
+      } catch (err) {
+        showMessage("Could not create order: " + err.message, true);
+      }
+    }
+
+    document.getElementById("create-btn").addEventListener("click", createOrder);
+
+    loadProducts().catch(err => showMessage("Could not load products: " + err.message, true));
+    loadOrders().catch(err => showMessage("Could not load orders: " + err.message, true));
+  </script>
+</body>
+</html>

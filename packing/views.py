@@ -136,3 +136,18 @@ def order_recommendation(request, order_id):
             },
         }
     )
+
+@require_GET
+def products(request):
+    data = [
+        {
+            "id": p.pk,
+            "name": p.name,
+            "dimensions_mm": [p.length, p.width, p.height],
+            "weight_g": p.weight,
+        }
+        for p in Product.objects.order_by("name")
+    ]
+    return JsonResponse({"products": data})
+
+    

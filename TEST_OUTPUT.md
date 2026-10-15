@@ -97,3 +97,14 @@ System check identified no issues (0 silenced).
 Ran 7 tests in 0.001s
 
 OK
+
+
+Found 33 test(s).
+Creating test database for alias 'default'...
+System check identified no issues (0 silenced).
+.................................
+----------------------------------------------------------------------
+Ran 33 tests in 0.100s
+
+OK
+Destroying test database for alias 'default'...

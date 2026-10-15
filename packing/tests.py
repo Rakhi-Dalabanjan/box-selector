@@ -244,3 +244,14 @@ class ApiTests(TestCase):
     def test_wrong_method_is_405(self):
         response = self.client.delete(reverse("orders"))
         self.assertEqual(response.status_code, 405)
+
+    
+    def test_list_products(self):
+        response = self.client.get(reverse("products"))
+        self.assertEqual(response.status_code, 200)
+        names = [p["name"] for p in response.json()["products"]]
+        self.assertIn(self.product.name, names)
+
+    def test_home_page_loads(self):
+        response = self.client.get("/")
+        self.assertEqual(response.status_code, 200)

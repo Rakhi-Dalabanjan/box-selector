@@ -10,4 +10,5 @@ urlpatterns = [
         views.order_recommendation,
         name="order-recommendation",
     ),
+    path("products/", views.products, name="products"),
 ]
