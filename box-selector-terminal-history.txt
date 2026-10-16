@@ -1,0 +1,58 @@
+clear 
+python manage.py runserver
+python -m venv .venv
+.venv\Scripts\activate
+pip install django
+django-admin startproject config .
+python manage.py startapp packing
+New-Item -Name ".gitignore" -ItemType File
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+python manage.py runserver
+clear 
+python manage.py shell
+python manage.py runserver
+clear 
+python manage.py runserver
+clear 
+python manage.py test
+python manage.py test -v 2
+python manage.py test packing.tests.CanPackTests
+clear 
+python manage.py test -v 2
+clear 
+`python manage.py test packing.tests.CanPackTests
+python -m django --version
+pip freeze | Out-File -Encoding utf8 requirements.txt
+git status
+git add .
+git status
+git remote -v
+clear 
+git init
+git status
+git add .
+git commit -m "Complete Django Box Selector assignment"
+git remote add origin https://github.com/Rakhi-Dalabanjan/box-selector.git
+git remote -v
+git remote set-url origin https://github.com/Rakhi-Dalabanjan/box-selector.git
+git branch -M main
+git push -u origin main
+git init
+git status
+git add .
+git commit -m "Add AI usage documentation"
+git remote -v
+clear 
+python manage.py runserver
+python manage.py test
+git add .
+git commit -m "Added front end"
+git push origin main
+python manage.py test
+dir
+Get-History | Format-List -Property CommandLine | Out-File terminal_commands.txt
+Get-Content (Get-PSReadLineOption).HistorySavePath
+Get-Content (Get-PSReadLineOption).HistorySavePath | Out-File "$HOME\Desktop\box-selector-terminal-history.txt"
+Get-Content (Get-PSReadLineOption).HistorySavePath | Out-File ".\box-selector-terminal-history.txt"

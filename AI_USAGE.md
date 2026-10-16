@@ -60,3 +60,6 @@ Claude AI conversation:
 https://claude.ai/share/d8a84b7f-2970-41dd-9c7e-f7e468d59dbf
 
 -- This shared conversation provides additional context about my AI-assisted development and learning process.
+
+-- 8. Finding and Reviewing Terminal Commands
+I also used Google to look up terminal commands that could help me review the commands used while working on the project. This included learning how to view the saved PowerShell command history and how to save that history to a text file for reference. The history file may not contain every command I ran, so I treated it as a record of the commands available in the saved history rather than a guaranteed complete list.
