@@ -1,65 +1,59 @@
--- 2. How I Used AI
 
 
-Understanding the Problem
+ 1. How I Used AI
 
-I first used AI to understand the assignment requirements and break the problem into smaller, manageable steps. Although I had basic knowledge of Django, I needed to understand how to approach the shipping-box recommendation problem and design the solution.
+ Understanding the Problem
 
------- AI-Assisted Coding and Step-by-Step Learning
+I used AI to understand the assignment and divide it into smaller steps. I knew the basics of Django, but I needed help understanding how to build a system that recommends a suitable shipping box for an order.
 
-I used code provided by AI as a starting point for implementing different parts of the application. However, I did not want to simply copy the code without understanding it.
+ AI-Assisted Coding and Learning
 
-I worked through the code step by step, asking for explanations of the logic, the purpose of different functions, and how the individual parts worked together. This helped me understand the implementation gradually.
+I used AI-generated code as a starting point while developing the project. I asked for explanations of the code so I could understand how it worked instead of just copying it.
 
-I focused particularly on the packing algorithm, product dimensions and rotations, available-space splitting, weight validation, selecting the cheapest suitable box, Django models, API endpoints, and automated tests.
+I focused on the packing algorithm, product dimensions, rotations, available spaces, weight limits, box selection, Django models, API endpoints, and tests.
 
-My approach was to use AI-generated code as a learning resource while developing my understanding of the implementation.
+ 2. Verification and Testing
 
--- 3. Verification and Testing
+I ran the Django test suite locally to check whether the application worked as expected.
 
-I ran the Django test suite locally to check the implemented functionality.
+The recorded test results included:
 
-The recorded results showed:
+- 33 tests passed in the full test suite.
+- 7 tests passed in the packing geometry tests.
 
-- "31 tests passed" in the full test suite.
-- "7 tests passed" when running the packing geometry tests separately.
+I reviewed the test results to understand which parts of the application were being checked. Passing tests does not mean that every possible case will work correctly.
 
-I used the test output to understand which scenarios were being checked and whether the implementation behaved as expected for those cases.
+ 3. My Contribution
 
-Passing tests do not guarantee that every possible input or packing arrangement is handled correctly.
+I worked through the assignment requirements, studied the code step by step, and ran tests to check the implementation.
 
--- 4. My Contribution and Understanding
+AI helped me with code and explanations, while I used those explanations to improve my understanding of the project. I learned that AI-generated code should be reviewed and tested rather than assumed to be correct.
 
-AI provided code and explanations during development. My contribution included working through the assignment requirements, following the implementation step by step, learning the reasoning behind the code, running tests, and reviewing the results.
+ 4. Limitations
 
-I learned that understanding code is important even when AI helps generate it. I also learned that generated code needs to be checked and tested rather than assumed to be correct.
+The packing algorithm uses a heuristic approach. It may not find a valid arrangement even when one is physically possible.
 
-I will document any specific AI suggestions that I changed or rejected using actual examples from my development process.
+The tests cover selected cases, so more testing may be needed to check additional situations.
 
--- 5. Limitations
+ 5. What I Learned
 
-The packing algorithm uses a heuristic approach. It may fail to find a valid arrangement even when a different arrangement could fit inside the box.
+This project helped me understand how to break a programming problem into smaller tasks.
 
-The automated tests cover selected scenarios, so additional testing may be needed to identify edge cases that are not covered by the current test suite.
+I improved my understanding of Django models, validation, API endpoints, automated testing, and the logic used to recommend a shipping box.
 
--- 6. Learning Outcome
+I also learned to read code carefully, ask questions when I did not understand something, and use tests to check the results.
 
-This project helped me learn how to approach a programming assignment by breaking it into smaller steps.
+ 6. AI Conversation
 
-I improved my understanding of the packing logic and how the Django application uses models, validation, API endpoints, and tests to implement the solution.
+I used Claude AI to understand the assignment, learn the packing algorithm, and get help with implementation.
 
-I also learned to read AI-assisted code more carefully, ask questions about unfamiliar logic, and use automated tests to verify behaviour.
-
-I still have areas to practise, particularly understanding complex packing arrangements and testing additional edge cases. I plan to continue improving these skills by explaining the code in my own words and experimenting with different inputs.
-
--- 7. AI Conversation Transcript
-
-I used Claude AI during the development of this project to understand the assignment requirements, learn the packing algorithm step by step, and get assistance with implementation.
-
-Claude AI conversation:
+**Claude AI conversation:**  
 https://claude.ai/share/d8a84b7f-2970-41dd-9c7e-f7e468d59dbf
 
--- This shared conversation provides additional context about my AI-assisted development and learning process.
+This conversation provides additional context about how I used AI during development.
 
--- 8. Finding and Reviewing Terminal Commands
-I also used Google to look up terminal commands that could help me review the commands used while working on the project. This included learning how to view the saved PowerShell command history and how to save that history to a text file for reference. The history file may not contain every command I ran, so I treated it as a record of the commands available in the saved history rather than a guaranteed complete list.
+ 7. Finding Terminal Commands
+
+I used Google to find terminal commands for reviewing the commands I had used while working on the project.
+
+I learned how to view saved PowerShell command history and save it to a text file. The saved history may not contain every command I ran, so I treated it as a reference rather than a complete record.

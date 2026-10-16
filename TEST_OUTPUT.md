@@ -3,19 +3,8 @@
 **Date:** 15 October 2026
 
 ## 1. Full Test Suite
-
-**Command:** `python manage.py test -v 2`
-
-**Result:** PASS — 31 tests passed.
-
-**System check:** No issues identified.
-
-The test suite covered API requests, model validation, box recommendations, weight limits, product rotation, and packing geometry.
-
-**Actual terminal output:**
-
 (.venv) PS D:\personal\projects\assignment\box-selector> python manage.py test -v 2
-Found 31 test(s).
+Found 33 test(s).
 Creating test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
 Operations to perform:
   Synchronize unmigrated apps: messages, staticfiles
@@ -46,8 +35,10 @@ Running migrations:
 System check identified no issues (0 silenced).
 test_bad_payloads_return_400_and_create_nothing (packing.tests.ApiTests.test_bad_payloads_return_400_and_create_nothing) ... ok
 test_create_order (packing.tests.ApiTests.test_create_order) ... ok
+test_home_page_loads (packing.tests.ApiTests.test_home_page_loads) ... ok
 test_invalid_json_returns_400 (packing.tests.ApiTests.test_invalid_json_returns_400) ... ok
 test_list_orders (packing.tests.ApiTests.test_list_orders) ... ok
+test_list_products (packing.tests.ApiTests.test_list_products) ... ok
 test_recommendation_for_empty_order_is_400 (packing.tests.ApiTests.test_recommendation_for_empty_order_is_400) ... ok
 test_recommendation_for_missing_order_is_404 (packing.tests.ApiTests.test_recommendation_for_missing_order_is_404) ... ok
 test_recommendation_returns_cheapest_box (packing.tests.ApiTests.test_recommendation_returns_cheapest_box) ... ok
@@ -65,20 +56,19 @@ test_cheapest_fitting_box_is_chosen (packing.tests.RecommendBoxTests.test_cheape
 test_empty_order_raises (packing.tests.RecommendBoxTests.test_empty_order_raises) ... ok
 test_equal_cost_prefers_smaller_box (packing.tests.RecommendBoxTests.test_equal_cost_prefers_smaller_box) ... ok
 test_returns_none_when_nothing_fits (packing.tests.RecommendBoxTests.test_returns_none_when_nothing_fits) ... ok
-test_returns_none_when_too_heavy_for_every_box (packing.tests.RecommendBoxTests.test_returns_none_when_too_heavy_for_every_box) ...
- ok
+test_returns_none_when_too_heavy_for_every_box (packing.tests.RecommendBoxTests.test_returns_none_when_too_heavy_for_every_box) ... ok
 test_too_big_for_cheap_box_goes_to_bigger_one (packing.tests.RecommendBoxTests.test_too_big_for_cheap_box_goes_to_bigger_one) ... ok
 test_weight_limit_is_respected (packing.tests.RecommendBoxTests.test_weight_limit_is_respected) ... ok
 test_fifth_cube_does_not_fit (packing.tests.CanPackTests.test_fifth_cube_does_not_fit) ... ok
 test_four_cubes_fill_a_box_exactly (packing.tests.CanPackTests.test_four_cubes_fill_a_box_exactly) ... ok
 test_item_too_tall_in_every_rotation (packing.tests.CanPackTests.test_item_too_tall_in_every_rotation) ... ok
-test_only_one_large_cube_fits_in_a_bigger_cube (packing.tests.CanPackTests.test_only_one_large_cube_fits_in_a_bigger_cube) ... ok  
+test_only_one_large_cube_fits_in_a_bigger_cube (packing.tests.CanPackTests.test_only_one_large_cube_fits_in_a_bigger_cube) ... ok
 test_rotation_is_allowed (packing.tests.CanPackTests.test_rotation_is_allowed) ... ok
 test_two_items_fit_exactly (packing.tests.CanPackTests.test_two_items_fit_exactly) ... ok
 test_volume_passes_but_geometry_fails (packing.tests.CanPackTests.test_volume_passes_but_geometry_fails) ... ok
 
 ----------------------------------------------------------------------
-Ran 31 tests in 0.118s
+Ran 33 tests in 0.169s
 
 OK
 Destroying test database for alias 'default' ('file:memorydb_default?mode=memory&cache=shared')...
